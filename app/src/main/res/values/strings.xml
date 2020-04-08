@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">C0775049_W2020_MAD3125_MidTerm</string>
+
+    <!--Titles-->
+    <string name="mainActivityTitle">File New Return</string>
+
+    <!--Input Control hint-->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="sin">Social Insurance Number</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="others">Others</string>
+    <string name="gross_income">Gross Income</string>
+    <string name="rrsp">RRSP Contributed</string>
+</resources>
