@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         //Set title of activity
         setTitle(R.string.mainActivityTitle);
 
-        
+
+
 
     }
 }
