@@ -14,4 +14,7 @@
     <string name="others">Others</string>
     <string name="gross_income">Gross Income</string>
     <string name="rrsp">RRSP Contributed</string>
+    <string name="taxListActivityTile">List Of Tax Filed</string>
+    <string name="kashyap_jhaveri">Kashyap Jhaveri</string>
+    <string name="splash_sreen_title">CRA Tax Calculater</string>
 </resources>

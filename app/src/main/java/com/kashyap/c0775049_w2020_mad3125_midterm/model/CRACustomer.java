@@ -2,6 +2,9 @@ package com.kashyap.c0775049_w2020_mad3125_midterm.model;
 
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CRACustomer implements Serializable {
@@ -10,7 +13,7 @@ public class CRACustomer implements Serializable {
     private String sin;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private String birthDate;
     private String gender;
     private Double grossIncome = 0.0;
     private Double rrspContributed = 0.0;
@@ -18,7 +21,7 @@ public class CRACustomer implements Serializable {
 
     //Generated Values
     private Integer age;
-    private Date taxFileDate;
+    private String taxFileDate;
     private Double federalTax = 0.0 ;
     private Double provincialTax = 0.0;
     private Double cpp = 0.0;
@@ -26,21 +29,29 @@ public class CRACustomer implements Serializable {
     private Double totalTaxableIncome = 0.0;
     private Double totalTaxPayed = 0.0;
 
+    private NumberFormat format = NumberFormat.getCurrencyInstance();
 
-    public CRACustomer(String sin, String firstName, String lastName, Date birthDate, String gender, Double grossIncome, Double rrspContributed) {
+
+
+    public CRACustomer(String sin, String firstName, String lastName, String birthDate, Integer age,String gender, Double grossIncome, Double rrspContributed) {
         this.sin = sin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.age = age;
         this.gender = gender;
         this.grossIncome = grossIncome;
         this.rrspContributed = rrspContributed;
+
+        this.taxFileDate = new SimpleDateFormat("dd-MMM-yyyy").format(Calendar.getInstance().getTime()).toUpperCase();
         calculateCpp();
         calculateEi();
         this.totalTaxableIncome = this.grossIncome - (this.ei+this.cpp+this.rrspContributed);
         calculateProvincialTax(this.totalTaxableIncome);
         calculateFederalTax(this.totalTaxableIncome);
+        this.totalTaxPayed = this.provincialTax + this.federalTax;
     }
+
 
     private void calculateCpp(){
         if (this.grossIncome > 57400){
@@ -85,7 +96,7 @@ public class CRACustomer implements Serializable {
                             tempTaxableIncome -= 69999.99;
                             if (tempTaxableIncome > 220000.01)
                             {
-                                totalTax += (tempTaxableIncome * 12.16) / 100;
+                                totalTax += (tempTaxableIncome * 13.16) / 100;
                             }
                         } else
                         {
@@ -104,6 +115,7 @@ public class CRACustomer implements Serializable {
                 totalTax += (tempTaxableIncome * 5.05) / 100;
             }
         }
+
         this.provincialTax = Math.round(totalTax * 100.0) / 100.0;
     }
 
@@ -151,5 +163,77 @@ public class CRACustomer implements Serializable {
             }
         }
         this.federalTax = Math.round(totalTax * 100.0) / 100.0;
+    }
+
+    public String getSin() {
+        return sin;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFullName() {
+        return lastName.toUpperCase()+", "+firstName.toLowerCase();
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getGrossIncome() {
+        return format.format(grossIncome);
+    }
+
+    public String getRrspContributed() {
+        return format.format(rrspContributed);
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public String getTaxFileDate() {
+        return taxFileDate;
+    }
+
+    public String getFederalTax() {
+        return format.format(federalTax);
+    }
+
+    public String getProvincialTax() {
+        return format.format(provincialTax);
+    }
+
+    public String getCpp() {
+        return format.format(cpp);
+    }
+
+    public String getEi() {
+        return format.format(ei);
+    }
+
+    public String getTotalTaxableIncome() {
+        return format.format(totalTaxableIncome);
+    }
+
+    public String getTotalTaxPayed() {
+        return format.format(totalTaxPayed);
+    }
+
+    public String[] getLables(){
+        return new String[]{"SIN","Full Name","Date of birth","Gender","Age","Tax Filling date","Gross Income","Federal Tax","Provincial Tax(Ontario)","CPP","EI","RRSP Contributed","Total Taxable Income","Total Tax Played"};
+    }
+
+    public String[] getContent(){
+        return new String[]{getSin(),getFullName(),getBirthDate(),getGender(),String.valueOf(getAge()),getTaxFileDate(),getGrossIncome(),getFederalTax(),getProvincialTax(),getCpp(),getEi(),getRrspContributed(),getTotalTaxableIncome(),getTotalTaxPayed()};
     }
 }
